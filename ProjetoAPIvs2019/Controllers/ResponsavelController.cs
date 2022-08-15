@@ -1,5 +1,6 @@
 ﻿using API_TCC.Model;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,13 @@ namespace ProjetoAPIvs2019.Controllers
     [ApiController]
     public class ResponsavelController : ControllerBase
     {
-        private readonly IResponsavelService _repositorio;
-        public ResponsavelController(IResponsavelService tarefaRepo)
+        private readonly IGenericaInterface<ResponsavelDTO, Responsavel> _repositorio;
+        public ResponsavelController(IGenericaInterface<ResponsavelDTO, Responsavel> tarefaRepo)
         {
             _repositorio = tarefaRepo;
         }
         [HttpGet]
-        [Route("Buscar-Responsaveis")]
+        [Route("Buscar-Responsavel")]
         public async Task<IActionResult> BuscarAsync()
         {
             var result = await _repositorio.BuscarAsync();
@@ -33,21 +34,21 @@ namespace ProjetoAPIvs2019.Controllers
         }
 
         [HttpPost]
-        [Route("Cadastrar")]
-        public async Task<IActionResult> Cadastrar(Responsavel responsavel)
+        [Route("Cadastrar-Responsavel")]
+        public async Task<IActionResult> Cadastrar(ResponsavelDTO responsavel)
         {
             var result = await _repositorio.CadastrarAsync(responsavel);
             return Ok(result);
         }
         [HttpPost]
-        [Route("Atualizar")]
+        [Route("Atualizar-Responsavel")]
         public async Task<IActionResult> Atualizar(Responsavel responsavel)
         {
             var result = await _repositorio.AtualizarAsync(responsavel);
             return Ok(result);
         }
         [HttpDelete]
-        [Route("Remover")]
+        [Route("Remover-Responsavel")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var resultado = await _repositorio.DeletarAsync(id);

@@ -2,6 +2,7 @@
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using ProjetoAPIvs2019.Context;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service.Interfaces;
 using ProjetoVendas.Services.Exceptions;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoAPIvs2019.Service
 {
-    public class PrestadorService : IPrestadorService
+    public class PrestadorService : IGenericaInterface<PrestadorDTO, Prestador>
     {
 
         private DataContext _db;
@@ -24,7 +25,7 @@ namespace ProjetoAPIvs2019.Service
             _db = dbSession;
         }
 
-        public async Task<int> CadastrarAsync(Prestador obj)
+        public async Task<string> CadastrarAsync(PrestadorDTO obj)
         {
             try
             {
@@ -32,10 +33,10 @@ namespace ProjetoAPIvs2019.Service
                 {
 
                     string command = $"INSERT INTO Tb_Prestador values ('{obj.NomePrestador}', '{obj.Sobrenome}', " +
-                        $"{obj.tipoDocumento}, '{obj.NumeroDocumento}', {obj.funcao}";
+                        $"{(int)obj.tipoDocumento}, '{obj.NumeroDocumento}', {(int)obj.funcao})";
                     var result = await conn.ExecuteAsync(sql: command);
                     //resultado em 0 ou 1;
-                    return result;
+                    return "Cadastrado com Sucesso";
                 }
             }
             catch (DbUpdateConcurrencyException e)
@@ -44,7 +45,7 @@ namespace ProjetoAPIvs2019.Service
             }
         }
 
-        public async Task<IEnumerable<Prestador>> AtualizarAsync(Prestador obj)
+        public async Task<string> AtualizarAsync(Prestador obj)
         {
             try
             {
@@ -55,7 +56,7 @@ namespace ProjetoAPIvs2019.Service
                         $"NumeroDocumento = '{obj.NumeroDocumento}', FuncaoPrestador = {obj.funcao} WHERE IdDependente = {obj.Id}";
                     var result = await conn.QueryAsync<Prestador>(sql: command);
 
-                    return result;
+                    return "Atualizado com sucesso";
 
                 }
             }
@@ -84,7 +85,7 @@ namespace ProjetoAPIvs2019.Service
             }
         }
 
-        public async Task<Prestador> BuscarId(int? id)
+        public async Task<Prestador> BuscarId(int id)
         {
             try
             {

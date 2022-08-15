@@ -7,9 +7,7 @@ namespace API_TCC.Model
     public class Prestador
     {
 
-        public int Id { get; set; }
-
- 
+        public int Id { get; set; }        
         public string NomePrestador { get; set; }
         public string Sobrenome { get; set; }
 
@@ -19,9 +17,8 @@ namespace API_TCC.Model
       
         public FuncaoPrestador funcao { get; set; }
 
-        public Prestador(int id, string nomePrestador, string sobrenome, Documento tipoDocumento, int numeroDocumento, FuncaoPrestador funcao)
+        public Prestador(string nomePrestador, string sobrenome, Documento tipoDocumento, int numeroDocumento, FuncaoPrestador funcao)
         {
-            Id = id;
             NomePrestador = nomePrestador;
             Sobrenome = sobrenome;
             this.tipoDocumento = tipoDocumento;

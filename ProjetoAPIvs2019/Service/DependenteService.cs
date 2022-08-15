@@ -3,6 +3,7 @@ using API_TCC.Model.Enum;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 using ProjetoAPIvs2019.Context;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service.Interfaces;
 using ProjetoVendas.Services.Exceptions;
 using System;
@@ -12,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace ProjetoAPIvs2019.Service
 {
-    public class DependenteService : IDependenteService
+    public class DependenteService : IGenericaInterface<DependenteDTO, Dependente>
     {
 
         private DataContext _db;
 
         const string baseSql = @"SELECT *
-                                  FROM [dbo].[Tb_Dependente]";
+                                  FROM [dbo].[TbDependente]";
 
         // UtilService util = new UtilService();
         private IUtilService util;
@@ -29,18 +30,19 @@ namespace ProjetoAPIvs2019.Service
 
         }
 
-        public async Task<int> CadastrarAsync(Dependente obj)
+        public async Task<string> CadastrarAsync(DTO.DependenteDTO obj)
         {
             try
             {
                 using (var conn = _db.Connection)
                 {
 
-                    string command = $"INSERT INTO Tb_Dependente values ('{obj.Nome}', '{obj.Sobrenome}', '{obj.DataNascimento}', '{obj.NomeResponsavel}', " +
+                    //pegar o IdResponsavel do usuario que está logado.
+                    string command = $"INSERT INTO TbDependente values ('{obj.Nome}', '{obj.Sobrenome}', '{obj.DataNascimento}', '{obj.IdResponsavel}', " +
                         $"{obj.TipoDocumento}, '{obj.NumeroDocumento}', {obj.TelefonesContatoEmergencia}, '{obj.Endereco}', {obj.Cep})";
                     var result = await conn.ExecuteAsync(sql: command);
                     //resultado em 0 ou 1;
-                    return result;
+                    return "Sucesso";
                 }
             }
             catch (DbUpdateConcurrencyException e)
@@ -49,7 +51,7 @@ namespace ProjetoAPIvs2019.Service
             }
         }
 
-        public async Task<IEnumerable<Dependente>> AtualizarAsync(Dependente obj)
+        public async Task<string> AtualizarAsync(Dependente obj)
         {
 
             try
@@ -57,11 +59,11 @@ namespace ProjetoAPIvs2019.Service
                 using (var conn = _db.Connection)
                 {
 
-                    string command = $"UPDATE Tb_Dependente SET Nome = '{obj.Nome}', Sobrenome = '{obj.Sobrenome}', DataNascimento = '{obj.DataNascimento}', NomeResponsavel = '{obj.NomeResponsavel}'," +
+                    string command = $"UPDATE TbDependente SET Nome = '{obj.Nome}', Sobrenome = '{obj.Sobrenome}', DataNascimento = '{obj.DataNascimento}', NomeResponsavel = '{obj.IdResponsavel}'," +
                        $"TipoDocumento = {((int)obj.TipoDocumento)},NumeroDocumento = '{obj.NumeroDocumento}', TelefonesContatoEmergencia = {obj.TelefonesContatoEmergencia}, Endereco= '{obj.Endereco}', Cep = {obj.Cep}  WHERE IdDependente = {obj.Id}";
                     var result = await conn.QueryAsync<Dependente>(sql: command);
 
-                    return result;
+                    return "Sucesso";
 
                 }
             }
@@ -77,7 +79,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string query = "SELECT * FROM Tb_Dependente";
+                    string query = "SELECT * FROM TbDependente";
                     List<Dependente> tarefas = (await conn.QueryAsync<Dependente>(sql: query)).ToList();
                     return tarefas;
                 }
@@ -95,8 +97,8 @@ namespace ProjetoAPIvs2019.Service
         {
             using (var conn = _db.Connection)
             {
-                string query = $"SELECT * FROM Tb_Dependente WHERE IdDependente = {id}";
-                Dependente resp = await conn.QueryFirstOrDefaultAsync<Dependente>
+                string query = $"SELECT * FROM TbDependente WHERE IdDependente = {id}";
+                    Dependente resp = await conn.QueryFirstOrDefaultAsync<Dependente>
                     (sql: query, param: new { id });
                 return resp;
             }
@@ -109,15 +111,15 @@ namespace ProjetoAPIvs2019.Service
         }
     }
 
-    public async Task<int> DeletarAsync(int id)
+    public async Task<string> DeletarAsync(int id)
     {
         try
         {
             using (var conn = _db.Connection)
             {
-                string command = @"DELETE FROM Tb_Dependente WHERE IdDependente = @id";
+                string command = @"DELETE FROM TbDependente WHERE IdDependente = @id";
                 var resultado = await conn.ExecuteAsync(sql: command, param: new { id });
-                return resultado;
+                return "Deletado com Sucesso";
             }
         }
         catch (DbUpdateException e)

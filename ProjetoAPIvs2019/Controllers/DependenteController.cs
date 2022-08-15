@@ -1,5 +1,6 @@
 ﻿using API_TCC.Model;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace ProjetoAPIvs2019.Controllers
     [Route("api/Dependente")]
     public class DependenteController : ControllerBase
     {
-        private readonly IDependenteService _repositorio;
-        public DependenteController(IDependenteService tarefaRepo)
+        private readonly IGenericaInterface<DependenteDTO, Dependente> _repositorio;
+        public DependenteController(IGenericaInterface<DependenteDTO, Dependente> tarefaRepo)
         {
             _repositorio = tarefaRepo;
         }
@@ -34,7 +35,7 @@ namespace ProjetoAPIvs2019.Controllers
 
         [HttpPost]
         [Route("Cadastrar-Dependentes")]
-        public async Task<IActionResult> Cadastrar([FromBody] Dependente dependente)
+        public async Task<IActionResult> Cadastrar([FromBody] DependenteDTO dependente)
         {
             var result = await _repositorio.CadastrarAsync(dependente);
             return Ok(result);

@@ -1,3 +1,4 @@
+using API_TCC.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using ProjetoAPIvs2019.Context;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service;
 using ProjetoAPIvs2019.Service.Interfaces;
 using System;
@@ -50,9 +52,9 @@ namespace ProjetoAPIvs2019
 
             services.AddScoped<DataContext>();
 
-            services.AddTransient<IResponsavelService, ResponsavelService>();
-            services.AddTransient<IDependenteService, DependenteService>();
-            services.AddTransient<IPrestadorService, PrestadorService>();
+            services.AddTransient<IGenericaInterface<ResponsavelDTO, Responsavel>, ResponsavelService>();
+            services.AddTransient<IGenericaInterface<DependenteDTO, Dependente>, DependenteService>();
+            services.AddTransient<IGenericaInterface<PrestadorDTO, Prestador>, PrestadorService>();
 
 
 

@@ -1,5 +1,6 @@
 ﻿using API_TCC.Model;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoAPIvs2019.DTO;
 using ProjetoAPIvs2019.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace ProjetoAPIvs2019.Controllers
     [Route("api/Prestador")]
     public class PrestadorController : ControllerBase
     {
-        private readonly IPrestadorService _repositorio;
-        public PrestadorController(IPrestadorService tarefaRepo)
+        private readonly IGenericaInterface<PrestadorDTO, Prestador> _repositorio;
+        public PrestadorController(IGenericaInterface<PrestadorDTO, Prestador> tarefaRepo)
         {
             _repositorio = tarefaRepo;
         }
@@ -34,7 +35,7 @@ namespace ProjetoAPIvs2019.Controllers
 
         [HttpPost]
         [Route("Cadastrar")]
-        public async Task<IActionResult> Cadastrar(Prestador prestador)
+        public async Task<IActionResult> Cadastrar(PrestadorDTO prestador)
         {
             var result = await _repositorio.CadastrarAsync(prestador);
             return Ok(result);

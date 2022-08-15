@@ -13,21 +13,21 @@ namespace API_TCC.Model
         public string Sobrenome { get; set; }
         public string Email { get; set; }
 
-        public int Tipodocumento { get; set; }
+        public Documento Tipodocumento { get; set; }
         public string NumeroDocumento { get; set; }
         public int TelefonesContatoEmergencia { get; set; }
-        Endereco Endereco { get; set; }
+        public Endereco Endereco { get; set; }
+        // no swagger o CEP está aparecendo 2 vezes pois na classe de Endereço já tem cep, porém o cep digitado pela usuaria que vai preencher os outros campos 
         public int Cep { get; set; }
-        public List<Dependente> Dependentes { get; set; }
+        public int Dependentes { get; set; }
        
 
         public Responsavel()
         {
         }
 
-        public Responsavel(int id, string nome, string sobrenome, string email, int tipodocumento, string numeroDocumento, int telefonesContatoEmergencia, Endereco endereco, int cep, List<Dependente> dependentes)
+        public Responsavel(string nome, string sobrenome, string email, Documento tipodocumento, string numeroDocumento, int telefonesContatoEmergencia, Endereco endereco, int cep, int dependentes)
         {
-            Id = id;
             Nome = nome;
             Sobrenome = sobrenome;
             Email = email;
