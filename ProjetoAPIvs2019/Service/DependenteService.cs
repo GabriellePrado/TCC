@@ -42,7 +42,14 @@ namespace ProjetoAPIvs2019.Service
                         $"{obj.TipoDocumento}, '{obj.NumeroDocumento}', {obj.TelefonesContatoEmergencia}, '{obj.Endereco}', {obj.Cep})";
                     var result = await conn.ExecuteAsync(sql: command);
                     //resultado em 0 ou 1;
-                    return "Sucesso";
+                    if( result == 1)
+                    {
+                        return "Sucesso";
+                    }
+                    else
+                    {
+                        return "Falhou";
+                    }
                 }
             }
             catch (DbUpdateConcurrencyException e)

@@ -14,6 +14,7 @@ namespace ProjetoAPIvs2019.Controllers
     public class ResponsavelController : ControllerBase
     {
         private readonly IGenericaInterface<ResponsavelDTO, Responsavel> _repositorio;
+        private readonly ILoginService _repositorioLogin;
         public ResponsavelController(IGenericaInterface<ResponsavelDTO, Responsavel> tarefaRepo)
         {
             _repositorio = tarefaRepo;
@@ -37,8 +38,12 @@ namespace ProjetoAPIvs2019.Controllers
         [Route("Cadastrar-Responsavel")]
         public async Task<IActionResult> Cadastrar(ResponsavelDTO responsavel)
         {
-            var result = await _repositorio.CadastrarAsync(responsavel);
-            return Ok(result);
+            var retornoCadastroUsuario = await _repositorio.CadastrarAsync(responsavel);
+            //Cadastra junto o login
+            var retornoCadastroLogin = await _repositorioLogin.CadastrarAsync(responsavel);
+      
+            // fazer futura validação com status code 
+            return Ok(retornoCadastroUsuario);
         }
         [HttpPost]
         [Route("Atualizar-Responsavel")]

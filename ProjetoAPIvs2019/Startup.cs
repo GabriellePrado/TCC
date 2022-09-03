@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using MySqlConnector;
 using ProjetoAPIvs2019.Context;
 using ProjetoAPIvs2019.DTO;
+using ProjetoAPIvs2019.Model;
 using ProjetoAPIvs2019.Service;
 using ProjetoAPIvs2019.Service.Interfaces;
 using System;
@@ -55,6 +56,7 @@ namespace ProjetoAPIvs2019
             services.AddTransient<IGenericaInterface<ResponsavelDTO, Responsavel>, ResponsavelService>();
             services.AddTransient<IGenericaInterface<DependenteDTO, Dependente>, DependenteService>();
             services.AddTransient<IGenericaInterface<PrestadorDTO, Prestador>, PrestadorService>();
+            services.AddTransient<ILoginService, LoginService>();
 
 
 

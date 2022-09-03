@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HqoywkLz5mgjIUDM8YPreL8jRPzq5jrrkkPLt2+pqn0cNd2uVlgGqPEssuIKDYN+3TanPhBz/HfuGovlBF+WjA==",
+  "dgSpecHash": "DVwmz6P026naNA4/yAqN5czTqU07up98/5yZuV8940zZ6oD3vX8+qirJOHGw5s5qSwykx2kpcd2G8DJrFcdzPQ==",
   "success": true,
-  "projectFilePath": "D:\\Projetos\\ProjetoAPIvs2019\\ProjetoAPIvs2019\\ProjetoAPIvs2019.csproj",
+  "projectFilePath": "D:\\Faculdade\\TCC\\APITcc\\TCC\\ProjetoAPIvs2019\\ProjetoAPIvs2019.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\anton\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\anton\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

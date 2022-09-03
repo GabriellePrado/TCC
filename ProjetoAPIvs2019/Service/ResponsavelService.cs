@@ -17,7 +17,7 @@ namespace ProjetoAPIvs2019.Service
         private DataContext _db;
 
         const string baseSql = @"SELECT *
-                                  FROM [dbo].[Tb_Responsavel]";
+                                  FROM [dbo].[TbResponsavel]";
 
         public ResponsavelService(DataContext dbSession)
         {
@@ -31,7 +31,7 @@ namespace ProjetoAPIvs2019.Service
                 using (var conn = _db.Connection)
                 {
 
-                    string command = $"INSERT INTO Tb_Responsavel values ('{obj.Nome}', '{obj.Sobrenome}', '{obj.Email}', " +
+                    string command = $"INSERT INTO TbResponsavel values ('{obj.Nome}', '{obj.Sobrenome}', '{obj.Email}', " +
                         $"{obj.Tipodocumento}, '{obj.NumeroDocumento}', {obj.TelefonesContatoEmergencia}, '{obj.Endereco}', {obj.Cep}, {obj.Dependentes})";
                     var result = await conn.ExecuteAsync(sql: command);
                     //resultado em 0 ou 1;
@@ -51,7 +51,7 @@ namespace ProjetoAPIvs2019.Service
                 using (var conn = _db.Connection)
                 {
 
-                    string command = $"UPDATE Tb_Responsavel SET Nome = '{obj.Nome}', Sobrenome = '{obj.Sobrenome}', Email = '{obj.Email}', TipoDocumento = {((int)obj.Tipodocumento)}, " +
+                    string command = $"UPDATE TbResponsavel SET Nome = '{obj.Nome}', Sobrenome = '{obj.Sobrenome}', Email = '{obj.Email}', TipoDocumento = {((int)obj.Tipodocumento)}, " +
                         $"NumeroDocumento = '{obj.NumeroDocumento}', TelefonesContatoEmergencia = {obj.TelefonesContatoEmergencia}, Endereco= '{obj.Endereco}', Cep = {obj.Cep}, Dependente = {obj.Dependentes} WHERE IdResponsavel = {obj.Id}";
                     var result = await conn.QueryAsync<Responsavel>(sql: command);
 
@@ -72,7 +72,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string query = "SELECT * FROM Tb_Responsavel";
+                    string query = "SELECT * FROM TbResponsavel";
                     List<Responsavel> tarefas = (await conn.QueryAsync<Responsavel>(sql: query)).ToList();
                     return tarefas;
                 }
@@ -90,7 +90,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string query = $"SELECT * FROM Tb_Responsavel WHERE IdResponsavel = {id}";
+                    string query = $"SELECT * FROM TbResponsavel WHERE IdResponsavel = {id}";
                     Responsavel resp = await conn.QueryFirstOrDefaultAsync<Responsavel>
                         (sql: query, param: new { id });
                     return resp;
@@ -110,7 +110,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string command = @"DELETE FROM Tb_Responsavel WHERE IdResponsavel = @id";
+                    string command = @"DELETE FROM TbResponsavel WHERE IdResponsavel = @id";
                     var resultado = await conn.ExecuteAsync(sql: command, param: new { id });
                     return "Deletado com sucesso";
                 }

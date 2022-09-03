@@ -18,7 +18,7 @@ namespace ProjetoAPIvs2019.Service
         private DataContext _db;
 
         const string baseSql = @"SELECT *
-                                  FROM [dbo].[Tb_Prestador]";
+                                  FROM [dbo].[TbPrestador]";
 
         public PrestadorService(DataContext dbSession)
         {
@@ -31,8 +31,8 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-
-                    string command = $"INSERT INTO Tb_Prestador values ('{obj.NomePrestador}', '{obj.Sobrenome}', " +
+                    // Obrigatóriamente tem que ser CNH 
+                    string command = $"INSERT INTO TbPrestador values ('{obj.NomePrestador}', '{obj.Sobrenome}', " +
                         $"{(int)obj.tipoDocumento}, '{obj.NumeroDocumento}', {(int)obj.funcao})";
                     var result = await conn.ExecuteAsync(sql: command);
                     //resultado em 0 ou 1;
@@ -52,7 +52,7 @@ namespace ProjetoAPIvs2019.Service
                 using (var conn = _db.Connection)
                 {
 
-                    string command = $"UPDATE Tb_Prestador SET Nome = '{obj.NomePrestador}', Sobrenome = '{obj.Sobrenome}', TipoDocumento = {((int)obj.tipoDocumento)}, " +
+                    string command = $"UPDATE TbPrestador SET Nome = '{obj.NomePrestador}', Sobrenome = '{obj.Sobrenome}', TipoDocumento = {((int)obj.tipoDocumento)}, " +
                         $"NumeroDocumento = '{obj.NumeroDocumento}', FuncaoPrestador = {obj.funcao} WHERE IdDependente = {obj.Id}";
                     var result = await conn.QueryAsync<Prestador>(sql: command);
 
@@ -73,7 +73,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string query = "SELECT * FROM Tb_Prestador";
+                    string query = "SELECT * FROM TbPrestador";
                     List<Prestador> tarefas = (await conn.QueryAsync<Prestador>(sql: query)).ToList();
                     return tarefas;
                 }
@@ -91,7 +91,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string query = $"SELECT * FROM Tb_Prestador WHERE IdPrestador = {id}";
+                    string query = $"SELECT * FROM TbPrestador WHERE IdPrestador = {id}";
                     Prestador resp = await conn.QueryFirstOrDefaultAsync<Prestador>
                         (sql: query, param: new { id });
                     return resp;
@@ -111,7 +111,7 @@ namespace ProjetoAPIvs2019.Service
             {
                 using (var conn = _db.Connection)
                 {
-                    string command = @"DELETE FROM Tb_Prestador WHERE IdPrestador = @id";
+                    string command = @"DELETE FROM TbPrestador WHERE IdPrestador = @id";
                     var resultado = await conn.ExecuteAsync(sql: command, param: new { id });
                     return "Deletado com sucesso";
                 }
